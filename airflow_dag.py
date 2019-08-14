@@ -7,7 +7,7 @@ default_args = {
     'owner': 'airflow',
     'depends_on_past': False,
     'start_date': datetime(2019, 8, 7),
-    'email':['davevheukelom@gmail.com'],
+    'email':['email@email.com'],
     'email_on_failure': True,
     'email_on_retry': True,
     'retries': 1,
@@ -26,21 +26,21 @@ dag = DAG(
 t1 = BashOperator(
     task_id='twitter_run',
     email_on_failure=True,
-    email=['davevheukelom@gmail.com'],
+    email=['email@email.com'],
     bash_command="python /Users/davevanheukelom/airflow/dags/Twitter.py ",
     dag=dag)
 
 t2 = BashOperator(
     task_id='dbt_run',
     email_on_failure=True,
-    email=['davevheukelom@gmail.com'],
+    email=['email@email.com'],
     bash_command="cd ~/Twitter && dbt run ",
     dag=dag)
 
 t3 = EmailOperator(
      task_id='send_email',
      trigger_rule = 'one_failed',
-     to=['davevheukelom@gmail.com'],
+     to=['email@email.com'],
      subject='Airflow Alert',
      html_content=""" <h3>Job failed</h3> """,
      dag=dag
